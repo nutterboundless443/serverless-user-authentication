@@ -30,6 +30,15 @@ async function handlePost(event) {
 
 async function registerUser(body) {
     const { username, password } = body;
+    // Check if the user already exists
+    const paramsCheck = {
+        TableName: USERS_TABLE,
+        Key: { username }
+    };
+    const userCheck = await db.get(paramsCheck).promise();
+    if (userCheck.Item) {
+        return { statusCode: 400, body: JSON.stringify({ message: 'Username already exists' }) };
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const params = {
         TableName: USERS_TABLE,
