@@ -6,7 +6,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs14.x
+      Runtime: nodejs16.x
       Environment:
         USERS_TABLE: !Ref UsersTable
         JWT_SECRET: !Ref JwtSecret
